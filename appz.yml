@@ -1,0 +1,37 @@
+app:
+    name: MSSQL
+    code: mssql
+    notify: appzdev@cloudbourne.co
+
+build:
+    version: 2017.2
+    env: DEV
+    build_file: none
+    output_files: output/*.zip
+    image_template: mssql-2017
+
+deploy:
+    context: alpha/DEV
+    type: statefulset
+    replicas: 1
+    port:
+    - 1433
+
+volumes:
+  - claim: mssql-data
+    mount: /var/lib/mssql
+    name: data
+    size: 5Gi
+  - claim: mssql-backup
+    mount: /appz/backup
+    name: backup
+    size: 5Gi
+
+properties:
+    SA_PASSWORD:
+      vault: SA_PASSWORD
+    DB_USER_PASS:
+      vault: DB_USER_PASS
+    DB_NAME: CLOUDCONTROL
+    DB_USER_NAME: appzuser  
+    revision : 11
