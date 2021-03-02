@@ -19,12 +19,8 @@ deploy:
 
 volumes:
   - claim: mssql-data
-    mount: /var/lib/mssql
+    mount: /appz/data
     name: data
-    size: 5Gi
-  - claim: mssql-backup
-    mount: /appz/backup
-    name: backup
     size: 5Gi
 
 properties:
